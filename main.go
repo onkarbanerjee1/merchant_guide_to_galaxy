@@ -14,6 +14,9 @@ import (
 	"github.com/onkarbanerjee1/merchant_guide_to_galaxy/roman"
 )
 
+// when we have no idea about the input we receive
+var errNoIdea = errors.New("I have no idea what you are talking about")
+
 // pats holds the different patterns for diff kind of statements in input file
 var pats = patterns.Patterns{
 	patterns.Pattern{Type: patterns.ConstantAssignment, PatternRx: regexp.MustCompile("^([A-Za-z]+) is ([I|V|X|L|C|D|M])$")},
@@ -21,9 +24,6 @@ var pats = patterns.Patterns{
 	patterns.Pattern{Type: patterns.GalacticAmountQuestion, PatternRx: regexp.MustCompile("^how much is ([A-Za-z\\s]+)\\?$")},
 	patterns.Pattern{Type: patterns.MetalCostQuestion, PatternRx: regexp.MustCompile("^how many [c|C]redits is ([A-Za-z\\s]+) ([A-Za-z\\s]+)\\?$")},
 }
-
-// when we have no idea about the input we receive
-var errNoIdea = errors.New("I have no idea what you are talking about")
 
 // exit the program after printing out the error causing it
 func abort(err error) {
@@ -43,22 +43,24 @@ func initProcessors(processors *map[patterns.PatternType]procs.Processor) {
 func main() {
 	// read the input from in (which could be anything like a file, the stdin or any stream of data)
 	var in io.Reader
-	// write the output to out (which could be anything like a file, the stdout or any stream of data)
-	var out io.Writer
 
 	if len(os.Args) != 2 {
-		abort(fmt.Errorf("Please provide the input file path as a single argument only"))
+		abort(fmt.Errorf("Please provide the input file path as a single argument only, refer README.md"))
 	}
 
-	// In this client(main program) we choose to use a file to read the inputs from and writes output to stdout
-	// we can update in and out to any io.Reader and io.Writer if source and dest changes
+	// In this client(main program) we choose to use a file to read the inputs from and write output to stdout
+	// we can update in and out to any io.Reader and io.Writer if input and output are to be through different
+	// ways and be able to pass them to the processers, since the processers accept any io.Reader and io.Writer
+	// if reqd, this client can also be updated to accept any of multiple ways to accept data and provide
+	// output based on arguments/flags
 	inputFilePath := os.Args[1]
 	file, err := os.Open(inputFilePath)
 	if err != nil {
 		abort(fmt.Errorf("Could not open %s, got %s", inputFilePath, err))
 	}
 	defer file.Close()
-	in, out = file, os.Stdout
+	in, out := file, os.Stdout
+	defer out.Close()
 
 	// get an instance of all the diff processors we have
 	processors := &map[patterns.PatternType]procs.Processor{}
@@ -72,7 +74,8 @@ func main() {
 		}
 		typ := pats.GetTypeOf(line)
 		if typ == patterns.InvalidLine {
-			fmt.Println(errNoIdea)
+			out.WriteString(fmt.Sprintln(errNoIdea))
+			out.Sync()
 			continue
 		}
 		// process the line using a processor based on the line's typ

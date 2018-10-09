@@ -10,7 +10,8 @@ import (
 
 func TestMetalCostQuestion(t *testing.T) {
 	initConstantsAssignments()
-	initMetalCosts()
+	initMetalRates()
+	defer ClearAssignments()
 	processor := NewMetalCostQuestionProcessor(regexp.MustCompile("^how many [c|C]redits is ([A-Za-z\\s]+) ([A-Za-z\\s]+)\\?$"), roman.ToArabic)
 
 	testCases := []struct {

@@ -12,6 +12,7 @@ var numbers map[string]int
 
 func TestConstantsAssignmentProcess(t *testing.T) {
 	initNumbers()
+	defer ClearAssignments()
 	processor := NewConstantsAssignmentProcessor(regexp.MustCompile("^([A-Za-z]+) is ([I|V|X|L|C|D|M])$"), roman.ValidateSymbol)
 	testCases := []struct {
 		galacticlines        []string

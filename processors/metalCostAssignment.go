@@ -21,7 +21,7 @@ func NewMetalCostAssignmentProcessor(rx *regexp.Regexp, toArabic fnArabic) Proce
 	return metalCostAssignmentProcessor{rx: rx, toArabic: toArabic}
 }
 
-// metalCostAssignmentProcessor's implementation of how to Process a galaticLine
+// metalCostAssignmentProcessor's implementation of a Processor
 func (processor metalCostAssignmentProcessor) Process(galacticLine string, w io.Writer) error {
 	out := bufio.NewWriter(w)
 	matches := processor.rx.FindStringSubmatch(galacticLine)

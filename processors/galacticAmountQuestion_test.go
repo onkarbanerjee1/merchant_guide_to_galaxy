@@ -11,6 +11,7 @@ import (
 func TestGalacticAmountQuestionProcess(t *testing.T) {
 	initNumbers()
 	initConstantsAssignments()
+	defer ClearAssignments()
 	processor := NewGalacticAmountQuestionProcessor(regexp.MustCompile("^how much is ([A-Za-z\\s]+)\\?$"), roman.ToArabic)
 	testCases := []struct {
 		galacticlines []string

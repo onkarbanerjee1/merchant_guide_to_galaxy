@@ -11,6 +11,7 @@ import (
 func TestMetalCostAssignmentProcess(t *testing.T) {
 	initNumbers()
 	initConstantsAssignments()
+	defer ClearAssignments()
 	processor := NewMetalCostAssignmentProcessor(regexp.MustCompile("^([A-Za-z\\s]+) ([A-Za-z]+) is ([0-9]*[.]?[0-9]+) [c|C]redits$"), roman.ToArabic)
 	testCases := []struct {
 		lines      []string

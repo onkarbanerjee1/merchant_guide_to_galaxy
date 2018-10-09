@@ -5,6 +5,7 @@ import (
 	"regexp"
 )
 
+// roman symbols for arabic numbers
 var numbers = map[string]int{
 	"I": 1,
 	"V": 5,

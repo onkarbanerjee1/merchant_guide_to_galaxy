@@ -20,7 +20,7 @@ func NewMetalCostQuestionProcessor(rx *regexp.Regexp, toArabic fnArabic) Process
 	return metalCostQuestionProcessor{rx: rx, toArabic: toArabic}
 }
 
-// metalCostQuestionProcessor's implementation of how to Process a galaticLine
+// metalCostQuestionProcessor's implementation of a Processor
 func (processor metalCostQuestionProcessor) Process(galacticLine string, w io.Writer) error {
 	out := bufio.NewWriter(w)
 	matches := processor.rx.FindStringSubmatch(galacticLine)

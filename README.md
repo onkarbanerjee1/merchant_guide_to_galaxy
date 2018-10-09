@@ -84,7 +84,7 @@ Merchant-guide-to-galaxy reads each input line and identifies them as one of the
 ```
 
 A processor is implemented for each of the valid types above. Based on the type of line encountered in the input, one of these processors is chosen at run time to process that line.
-Errors encountered are written back to the output such that they make sense to the end-user. Like `Invalid roman number, violated roman number rules` , `I have no idea what you are talking about` etc.
+Errors encountered are written back to the output such that they make sense to the end-user. Like `Invalid roman number, violated roman number rules` ,`No roman number symbol assigned for this galactic constant pish`, `I have no idea what you are talking about` etc.
 Assignment type lines do not get responded with any output line unless an error is encountered.
 Question type lines get responded with their answers or an error(if encountered) to the output.
 
@@ -92,7 +92,7 @@ Question type lines get responded with their answers or an error(if encountered)
 
 1)  Galactic constants and metal names are case insensitive . ie. `glob`,`Glob` and even `gLOb` all mean the same thing, same with metal names.
 
-2)  Empty line are ignored
+2)  Empty lines are ignored
 
 3)  Reassignments are valid. Duplicate assignments work as reassignments with same value, they are not erred out.
 

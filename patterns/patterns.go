@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-// Different kind of input lines supported
+// Different kinds of input lines supported
 const (
 	ConstantAssignment     PatternType = iota // assignment of roman value to galatic constants
 	MetalCostAssignment                       // assignment of cost to different metals
@@ -26,7 +26,6 @@ type Pattern struct {
 type Patterns []Pattern
 
 // GetTypeOf would return the PatternType of line supplied by the client
-// ie. one of the above PatternType constants
 func (pats Patterns) GetTypeOf(line string) PatternType {
 	for _, pat := range pats {
 		if pat.PatternRx.MatchString(line) {

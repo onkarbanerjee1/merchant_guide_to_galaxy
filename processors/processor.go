@@ -26,7 +26,8 @@ type fnValidate func(string) error
 // fnArabic is a function that can be used to convert a string to arabic number when reqd.
 type fnArabic func(string) (int, error)
 
-// Processor guarantees that any implementation of it can Process galacticLine and write to io.Writer
+// Processor guarantees that any implementation of it can Process galacticLine and write to
+// the supplied io.Writer
 type Processor interface {
 	Process(galacticLine string, w io.Writer) error
 }
@@ -50,7 +51,7 @@ func getRomanNumber(line string) (string, error) {
 	return romanNumberSb.String(), nil
 }
 
-// just an unexported convenience function to write output to the supplied *bufio.Writer
+// just a convenience function to write output to the supplied *bufio.Writer
 func writeTo(out *bufio.Writer, response string) error {
 	if _, err := out.Write(append([]byte(response), byte('\n'))); err != nil {
 		return err

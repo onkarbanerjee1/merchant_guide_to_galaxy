@@ -6,6 +6,8 @@ import (
 )
 
 func TestGetRomanNumber(t *testing.T) {
+	initConstantsAssignments()
+	defer ClearAssignments()
 	testCases := []struct {
 		galactic string
 		roman    string
@@ -21,6 +23,7 @@ func TestGetRomanNumber(t *testing.T) {
 		{"glob glob", "II", nil},
 		{"glob glob", "II", nil},
 		{"GLOB GLOB", "II", nil},
+		{"GLOB GLOB blot", "", fmt.Errorf("%s for %s", errNoConstant, "blot")},
 		{"blot", "", fmt.Errorf("%s for %s", errNoConstant, "blot")},
 		{"", "0", nil},
 	}
@@ -89,16 +92,10 @@ func initConstantsAssignments() {
 	}
 }
 
-func initMetalCosts() {
+func initMetalRates() {
 	metalRates = map[string]float64{
 		"silver": 17,
 		"gold":   14450,
 		"iron":   195.5,
 	}
 }
-
-// func ClearAllMaps() {
-// 	numbers = map[string]int{}
-// 	constantsAssignments = map[string]string{}
-// 	metalRates = map[string]float64{}
-// }

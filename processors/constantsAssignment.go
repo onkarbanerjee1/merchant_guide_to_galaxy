@@ -20,7 +20,7 @@ func NewConstantsAssignmentProcessor(rx *regexp.Regexp, validateSymbol fnValidat
 	return constantsAssignmentProcessor{rx: rx, validate: validateSymbol}
 }
 
-// constantsAssignmentProcessor's implementation of how to Process a galaticLine
+// constantsAssignmentProcessor's implementation of a Processor
 func (processor constantsAssignmentProcessor) Process(galacticLine string, w io.Writer) error {
 	out := bufio.NewWriter(w)
 	matches := processor.rx.FindStringSubmatch(galacticLine)

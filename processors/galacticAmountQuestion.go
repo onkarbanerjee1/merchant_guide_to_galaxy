@@ -20,7 +20,7 @@ func NewGalacticAmountQuestionProcessor(rx *regexp.Regexp, toArabic fnArabic) Pr
 	return galacticAmountQuestionProcessor{rx: rx, toArabic: toArabic}
 }
 
-// galacticAmountQuestionProcessor's implementation of how to Process a galaticLine
+// galacticAmountQuestionProcessor's implementation of a Processor
 func (processor galacticAmountQuestionProcessor) Process(galacticLine string, w io.Writer) error {
 	out := bufio.NewWriter(w)
 	matches := processor.rx.FindStringSubmatch(galacticLine)
